@@ -170,8 +170,6 @@ module.exports = function(grunt) {
     });
   });
 
-  grunt.registerTask('minify', ['newer:htmlmin','newer:cssmin','newer:uglify','newer:imagemin', 'newer:responsive_images']);
-
   // Register default tasks
-  // grunt.registerTask('default', ['psi-ngrok']);
+  grunt.registerTask('default', ['newer:htmlmin','newer:cssmin','newer:uglify','newer:imagemin','newer:responsive_images']);
 };
