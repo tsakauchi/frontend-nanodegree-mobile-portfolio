@@ -12,6 +12,7 @@
     "grunt-contrib-uglify": "^1.0.0",
     "grunt-newer": "^1.1.2",
     "grunt-pagespeed": "^2.0.0",
+    "grunt-responsive-images": "^0.1.7",
     "load-grunt-tasks": "^3.4.1",
     "ngrok": "^0.1.99"
   },

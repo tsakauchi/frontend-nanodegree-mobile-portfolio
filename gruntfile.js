@@ -49,11 +49,46 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'src/',
-            src: ['**/*.jpg'],
+            src: ['**/*.jpg', '!views/images/pizzeria.jpg'],
             dest: 'dist/',
             ext: '.jpg'
           }
         ]
+      }
+    },
+    responsive_images: {
+      options: {
+        engine: 'im'
+      },
+      target: {
+        options: {
+          sizes: [{
+            name: 's',
+            width: 240,
+            quality: 60
+          },{
+            name: 'm',
+            width: 360,
+            quality: 60
+          },{
+            name: 'l',
+            width: 720,
+            quality: 60
+          },{
+            name: 's',
+            width: 480,
+            suffix: '_x2',
+            quality: 60
+          },{
+            name: 'l',
+            width: 1440,
+            suffix: '_x2',
+            quality: 60
+          }]
+        },
+        files: {
+          'dist/views/images/pizzeria.jpg': 'src/views/images/pizzeria.jpg'
+        }
       }
     },
     htmlmin: {
@@ -113,6 +148,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
+  grunt.loadNpmTasks('grunt-responsive-images');
 
   // Register tasks
   grunt.registerTask('psi-ngrok', 'Run pagespeed with ngrok', function() {
@@ -130,7 +166,7 @@ module.exports = function(grunt) {
     });
   });
 
-  grunt.registerTask('minify', ['newer:htmlmin','newer:cssmin','newer:uglify','newer:imagemin']);
+  grunt.registerTask('minify', ['newer:htmlmin','newer:cssmin','newer:uglify','newer:imagemin', 'newer:responsive_images']);
 
   // Register default tasks
   // grunt.registerTask('default', ['psi-ngrok']);
