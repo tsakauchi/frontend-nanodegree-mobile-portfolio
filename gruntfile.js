@@ -63,6 +63,10 @@ module.exports = function(grunt) {
       target: {
         options: {
           sizes: [{
+            name: 't',
+            width: 100,
+            quality: 60
+          },{
             name: 's',
             width: 240,
             quality: 60

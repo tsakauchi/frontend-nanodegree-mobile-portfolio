@@ -7,21 +7,79 @@
     <meta name="author" content=" FILL ME IN ">
     <title>Cameron Pittman: Portfolio</title>
 
-    <!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link href="css/print.css" rel="stylesheet" media="print">
 
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/print.css" rel="stylesheet">
+    <!-- Minimal CSS required for good-enough above-the-fold presentation -->
+    <style>
+      * { font-family: 'Open Sans', sans-serif; color: #333; }
+      html { font-size: 100%; overflow-y: scroll; -webkit-tap-highlight-color: rgba(0,0,0,0); -ms-text-size-adjust: 100%; -webkit-text-size-adjust: none; }
+      body { background: #fff; margin: 0; font-size: 14px; line-height: 1.61; font-weight: 400; }
+      a { color: #12C; }
+      header { padding: 0 0.5em; color: #C90B0B; }
+      header, footer, .container { max-width: 45em; margin: 0 auto; }
+      img { border: 0; max-width: 100%; }
+      .hero { padding: 2em; background-color: #f8f8f8; font-size:1.2em;
+        border-bottom: 1px solid #ccc;
+        border-top: 1px solid #ccc;
+      }
+      .content { padding: 1em 1em; }
+    </style>
 
+    <!-- Async Loading of Google Analytics -->
     <script>
-      (function(w,g){w['GoogleAnalyticsObject']=g;
-      w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)};w[g].l=1*new Date();})(window,'ga');
+      (function(i,s,o,g,r,a,m) {
+          i['GoogleAnalyticsObject']=r;
+          i[r]=i[r]||function() {
+            (i[r].q=i[r].q||[]).push(arguments)
+          },
+          i[r].l=1*new Date();
+          a=s.createElement(o), m=s.getElementsByTagName(o)[0];
+          a.async=1;
+          a.src=g;
+          m.parentNode.insertBefore(a,m)
+      })
+      (window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      // Optional TODO: replace with your Google Analytics profile ID.
-      ga('create', 'UA-XXXX-Y');
+      ga('create', 'UA-XXXXX-Y', 'auto');
       ga('send', 'pageview');
     </script>
-    <script src="http://www.google-analytics.com/analytics.js"></script>
+
+    <!-- Async Loading of Google Web Font -->
+    <script>
+      WebFontConfig = {
+        google: { families: [ 'Open+Sans:400,700:latin' ] }
+      };
+
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
+    </script>
+
+    <!-- Async Loading of CSS -->
+    <script>
+      var callback = function() {
+        var head = document.getElementsByTagName('head')[0];
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'css/style.css';
+        head.appendChild(link, head);
+      };
+
+      var reqAnimationFrame = requestAnimationFrame || mozRequestAnimationFrame ||
+          webkitRequestAnimationFrame || msRequestAnimationFrame;
+
+      if (reqAnimationFrame) {
+        reqAnimationFrame(callback);
+      } else {
+        window.addEventListener('load', callback);
+      }
+    </script>
+
     <script async src="js/perfmatters.js"></script>
   </head>
 
@@ -57,7 +115,7 @@
           </li>
 
           <li>
-            <img style="width: 100px;" src="views/images/pizzeria.jpg">
+            <img src="views/images/pizzeria-t.png">
             <a href="views/pizza.html">Cam's Pizzeria</a>
             <p>Who wants a performant pizza?</p>
           </li>
