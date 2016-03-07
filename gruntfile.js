@@ -25,10 +25,96 @@ module.exports = function(grunt) {
           strategy: "mobile"
         }
       }
+    },
+    imagemin: {
+      png: {
+        options: {
+          optimizationLevel: 7
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'src/',
+            src: ['**/*.png'],
+            dest: 'dist/',
+            ext: '.png'
+          }
+        ]
+      },
+      jpg: {
+        options: {
+          progressive: true
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'src/',
+            src: ['**/*.jpg'],
+            dest: 'dist/',
+            ext: '.jpg'
+          }
+        ]
+      }
+    },
+    htmlmin: {
+      target: {
+        options: {
+          removeComments: true,
+          collapseWhitespace: true
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'src/',
+            src: ['**/*.html'],
+            dest: 'dist/',
+            ext: '.html'
+          }
+        ]
+      }
+    },
+    cssmin: {
+      options: {
+        roundingPrecision: 2
+      },
+      target: {
+        files: [
+          {
+            expand: true,
+            cwd: 'src/',
+            src: ['**/*.css'],
+            dest: 'dist/',
+            ext: '.css'
+          }
+        ]
+      }
+    },
+    uglify: {
+      options: {
+        mangle: true
+      },
+      target: {
+        files: [
+          {
+            expand: true,
+            cwd: 'src/',
+            src: ['**/*.js'],
+            dest: 'dist/',
+            ext: '.js'
+          }
+        ]
+      }
     }
   });
 
-  // Register customer task for ngrok
+  // Load NPM tasks
+  grunt.loadNpmTasks('grunt-newer');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-imagemin');
+
+  // Register tasks
   grunt.registerTask('psi-ngrok', 'Run pagespeed with ngrok', function() {
     var done = this.async();
     var port = 8080;
@@ -43,6 +129,8 @@ module.exports = function(grunt) {
       done();
     });
   });
+
+  grunt.registerTask('minify', ['newer:htmlmin','newer:cssmin','newer:uglify','newer:imagemin']);
 
   // Register default tasks
   // grunt.registerTask('default', ['psi-ngrok']);
