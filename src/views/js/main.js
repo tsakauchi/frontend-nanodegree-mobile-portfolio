@@ -490,16 +490,52 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // The following code for sliding background pizzas was pulled from Ilya's demo found at:
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
+// Creates pizzas based on viewport width/height
+// Terrible performance when changing window size by hand in PC
+// because any change in viewport will remove all pizzas and readd new ones...
+function createPizzas() {
+  var delta = 256;
+  var movingPizzas = document.getElementById("movingPizzas1");
+  var viewportWidth = window.innerWidth;
+  var viewportHeight = window.innerHeight;
+
+  while (movingPizzas.lastChild) {
+    movingPizzas.removeChild(movingPizzas.lastChild);
+  }
+
+  // Create pizzas using x/y coordinates each increasing by delta
+  // until x/y coordinates exceed the viewport height/width
+  for (var y = 0; y < viewportHeight; y+=delta) {
+    for (var x = 0; x < viewportWidth; x+=delta) {
+      var elem = document.createElement("img");
+      elem.className = "mover";
+      elem.src = "images/pizza.png";
+      elem.style.height = "100px";
+      elem.style.width = "73.333px";
+      elem.style.left = x + "px";
+      elem.style.top = y + "px";
+      movingPizzas.appendChild(elem);
+    }
+  }
+
+  updatePositions();
+}
+
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
   var items = document.getElementsByClassName("mover");
-  var scrollTop = document.body.scrollTop;
-  for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((scrollTop/ 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + "px";
+  var top = document.body.scrollTop / 1250;
+  var phase = [];
+
+  for (var i = 0; i < 5; i++) {
+    phase[i] = Math.sin(top + i) * 100;
+  }
+
+  for (var i = 0, max = items.length; i < max; i++) {
+    items[i].style.transform = "translateX(" + phase[i%5] + "px)";
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -515,19 +551,8 @@ function updatePositions() {
 // runs updatePositions on scroll
 window.addEventListener("scroll", updatePositions);
 
-// Generates the sliding pizzas when the page loads.
-document.addEventListener("DOMContentLoaded", function() {
-  var cols = 8;
-  var s = 256;
-  for (var i = 0; i < 200; i++) {
-    var elem = document.createElement("img");
-    elem.className = "mover";
-    elem.src = "images/pizza.png";
-    elem.style.height = "100px";
-    elem.style.width = "73.333px";
-    elem.basicLeft = (i % cols) * s;
-    elem.style.top = (Math.floor(i / cols) * s) + "px";
-    document.getElementById("movingPizzas1").appendChild(elem);
-  }
-  updatePositions();
-});
+// Update number of sliding pizzas when page size changes
+window.addEventListener("resize", createPizzas);
+
+// Generates the sliding pizzas when the page loads
+document.addEventListener("DOMContentLoaded", createPizzas);
