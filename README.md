@@ -1,20 +1,23 @@
-# Website Performance Optimization portfolio project
-Tsuginosuke Sakauchi
+# frontend-nanodegree-mobile-portfolio
+This repository contains a website for Frontend Nanodegree Project 4 Website Optimization.
 
-# Summary
-This is for Udacity Website Performance Optimization portfolio project (Project 4).
+## About this project
+The objective of this project is to learn how to optimize the critical rendering path to reduce website performance issues. This project also uses Google PageSpeed Insights to measure website performance. Specifically, the website is designed to achive a PageSpeed score greater than 90, while keeping the page frame rate at 60fps.
 
-# How to build and run this project
+## How do I run this project?
+Per project requirement, the project ships with "dist" directory that contains the distributable version of the web app. To run the app, simply open dist/index.html with Chrome (or equivalent browser). Alternatively, you can visit the [GitHub project page for this project](http://tsakauchi.github.io/frontend-nanodegree-mobile-portfolio/).
+
+## How do I build this project?
 This project uses Grunt to perform minifications and run Google PageSpeed Insights.
 
-## Prerequisites
+### Prerequisites
 - Node.js
 - Node Package Manager
 - Grunt (grunt-cli)
 - Python (to run simple HTTP server)
 - ImageMagick
 
-## Instructions
+### Instructions
 1. Check this project out from GitHub.
 2. From project root, run `npm install`. This will download all npm dependencies required to build this project.
 3. From project root, run `grunt`. This will build a minified website under `dist` directory.
@@ -81,17 +84,17 @@ Done, without errors.
 
 ```
 
-# About the Optimizations
+## About the Optimizations
 I performed the following optimizations:
 
-## Minifications
+### Minifications
 1. HTML Minification (grunt-contrib-htmlmin)
 2. CSS Minification (grunt-contrib-cssmin)
 3. JS Minification (grunt-contrib-uglify)
 4. Image Minification (grunt-contrib-imagemin)
 5. Image Reduction (grunt-responsive-images)
 
-## Critical Rendering Path
+### Critical Rendering Path
 1. Load render-blocking CSS asynchronously
   - Convert style.css to load asynchronously using JavaScript provided by the Google Developer help page
   - Move styles that affect a large portion of the webpage from style.css to in-line stylesheet in index.html
@@ -102,10 +105,10 @@ I performed the following optimizations:
 4. Load non-essential CSS only when necessary
   - Convert print.css to be media-specific stylesheet
 
-## Scroll Optimization
+### Scroll Optimization
 1. Scroll performance optimization to refresh within 5ms
   - In updatePositions function, get scrollTop value once outside the loop ahead of position change, then update position in a loop.
 
-## Resize Optimization
+### Resize Optimization
 1. Refactored changePizzaSizes to refresh within 10ms
   - Set pizza width as a relative size so that reading old size became unnecessary.
